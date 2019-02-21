@@ -66,7 +66,7 @@ public class TaskService extends JobIntentService {
 
 //                    9*60*1000
                     try {
-                        Thread.sleep(30*1000);
+                        Thread.sleep(60*1000);
                         enqueueWork();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -83,6 +83,7 @@ public class TaskService extends JobIntentService {
             }
         }
     }
+
 
     private void doLogging() {
         if(null == fos){

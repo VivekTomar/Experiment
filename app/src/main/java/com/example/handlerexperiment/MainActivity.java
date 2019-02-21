@@ -1,5 +1,7 @@
 package com.example.handlerexperiment;
 
+import android.app.AlarmManager;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements ResultCallBack.Re
 
     FileOutputStream fos;
     ResultCallBack mResultCallBack;
-    Button startHandler, statService;
+    Button startHandler, statService, stopService, alarmManager;
     Handler handler;
     Runnable task;
 
@@ -26,10 +28,18 @@ public class MainActivity extends AppCompatActivity implements ResultCallBack.Re
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         startHandler = (Button) findViewById(R.id.handler);
         startHandler.setOnClickListener(this);
+
         statService = (Button) findViewById(R.id.service);
         statService.setOnClickListener(this);
+
+        stopService = (Button) findViewById(R.id.stop);
+        stopService.setOnClickListener(this);
+
+        alarmManager = (Button) findViewById(R.id.alarm);
+        alarmManager.setOnClickListener(this);
 
         mResultCallBack = new ResultCallBack(new Handler());
         mResultCallBack.setReceiver(this);
@@ -77,9 +87,6 @@ public class MainActivity extends AppCompatActivity implements ResultCallBack.Re
                 fos.flush();
                 fos.close();
             }
-            if(null != fos) {
-
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,6 +106,15 @@ public class MainActivity extends AppCompatActivity implements ResultCallBack.Re
                 break;
             case R.id.service:
                 envokeService();
+                break;
+            case R.id.stop:
+//                TaskService.stop();
+                break;
+            case R.id.alarm:
+                AlarmReceiver.setAlarm(getApplication());
+                break;
+            case R.id.cancelAlarm:
+                AlarmReceiver.cancelAlarm(getApplication());
                 break;
         }
     }
